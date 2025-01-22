@@ -1,12 +1,15 @@
 import { component$, createContextId, Slot, useContextProvider, useStore } from "@builder.io/qwik";
 import Modal from "~/components/modal";
 
-export const MyContext = createContextId('qwik-affirmations')
+export const MyContext = createContextId<{
+  affirmations: [string, string][], // An array of [affirmation, author]
+  openModal: boolean,
+}>('qwik-affirmations')
 
 export default component$(() => {
   const state = useStore({
     affirmations: [],
-    openModal: false
+    openModal: true
   })
 
   useContextProvider(MyContext, state)
@@ -15,13 +18,15 @@ export default component$(() => {
     <>
       {state.openModal && <Modal/>}
       <header>
-        icon
+        <i onClick$={() => {
+          state.openModal = !state.openModal
+        }} class="fa-solid fa-plus cursor-pointer"></i>
       </header>
-      <main>
+      <main class="flex-1 flex flex-col max-w-[1200px] w-full mx-auto">
         <Slot />
       </main>
       <footer>
-        
+
       </footer>
     </>
   );
