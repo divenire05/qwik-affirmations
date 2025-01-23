@@ -9,7 +9,7 @@ export const MyContext = createContextId<{
 export default component$(() => {
   const state = useStore({
     affirmations: [],
-    openModal: true
+    openModal: false
   })
 
   useContextProvider(MyContext, state)

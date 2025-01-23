@@ -1,12 +1,27 @@
-import { component$, useSignal } from "@builder.io/qwik";
+import { component$, useContext, useSignal } from "@builder.io/qwik";
 import type { DocumentHead } from "@builder.io/qwik-city";
+import { MyContext } from "./layout";
 
 export default component$(() => {
   const displayIndex = useSignal(0)
-  return (
-    <div>
+  const data = useContext(MyContext)
 
-    </div>
+  return (
+    <>
+      {data.affirmations.length > 0 ? (
+        <>
+          <h1>{data.affirmations[displayIndex.value][0]}</h1>
+          <p><i>{data.affirmations[displayIndex.value][1]}</i></p>
+        </>
+      ) : (
+        <>
+          <p>Welcome to Affirmations!</p>
+          <p onClick$={() => {
+            data.openModal = true
+          }}>Add an affirmation</p>
+        </>
+      )}
+    </>
   );
 });
 
